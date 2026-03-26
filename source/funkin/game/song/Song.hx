@@ -1,4 +1,4 @@
-package;
+package funkin.game.song;
 
 import haxe.Json;
 import haxe.format.JsonParser;

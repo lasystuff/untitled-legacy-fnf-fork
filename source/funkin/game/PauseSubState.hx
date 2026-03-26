@@ -1,6 +1,5 @@
-package;
+package funkin.game;
 
-import Controls.Control;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxSubState;
@@ -10,7 +9,9 @@ import flixel.input.keyboard.FlxKey;
 import flixel.sound.FlxSound;
 import flixel.util.FlxColor;
 
-class PauseSubState extends MusicBeatSubstate
+import funkin.ui.MusicBeatSubState;
+
+class PauseSubState extends MusicBeatSubState
 {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
@@ -23,7 +24,7 @@ class PauseSubState extends MusicBeatSubstate
 	{
 		super();
 
-		pauseMusic = new FlxSound().loadEmbedded('assets/music/breakfast' + TitleState.soundExt, true, true);
+		pauseMusic = new FlxSound().loadEmbedded('assets/music/breakfast' + Constants.SOUND_EXT, true, true);
 		pauseMusic.volume = 0;
 		pauseMusic.play(false, FlxG.random.int(0, Std.int(pauseMusic.length / 2)));
 
@@ -83,12 +84,6 @@ class PauseSubState extends MusicBeatSubstate
 				case "Exit to menu":
 					FlxG.switchState(new MainMenuState());
 			}
-		}
-
-		if (FlxG.keys.justPressed.J)
-		{
-			// for reference later!
-			// PlayerSettings.player1.controls.replaceBinding(Control.LEFT, Keys, FlxKey.J, null);
 		}
 	}
 

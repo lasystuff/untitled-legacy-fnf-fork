@@ -1,8 +1,8 @@
-package;
+package funkin.game.objects;
 
 import flixel.group.FlxGroup;
 import openfl.Assets;
-import modding.HScript;
+import funkin.scripting.HScript;
 import yaml.*;
 
 class Stage extends FlxGroup
@@ -17,11 +17,14 @@ class Stage extends FlxGroup
 		super();
 		
 		this.name = name;
+
+		// TODO: support yml stage
+		
 		var scriptPath = "assets/data/stages/" + name + ".hscript";
 		if (Assets.exists(scriptPath))
 		{
 			script = new HScript(scriptPath);
-			script.scriptObject = PlayState.instance;
+			script.superInstance = PlayState.instance;
 			script.variables.set("add", this.add);
 			script.variables.set("remove", this.remove);
 			script.variables.set("foreground", this.foreground);

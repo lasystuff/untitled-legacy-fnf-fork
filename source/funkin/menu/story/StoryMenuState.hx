@@ -1,4 +1,4 @@
-package;
+package funkin.menu.story;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -11,7 +11,10 @@ import flixel.text.FlxText;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
-import lime.net.curl.CURLCode;
+
+import funkin.ui.MusicBeatState;
+import funkin.data.Highscore;
+import funkin.game.PlayState;
 
 using StringTools;
 
@@ -64,6 +67,11 @@ class StoryMenuState extends MusicBeatState
 	var leftArrow:FlxSprite;
 	var rightArrow:FlxSprite;
 
+	override public function new()
+	{
+		super();
+	}
+
 	override function create()
 	{
 		transIn = FlxTransitionableState.defaultTransIn;
@@ -72,7 +80,7 @@ class StoryMenuState extends MusicBeatState
 		if (FlxG.sound.music != null)
 		{
 			if (!FlxG.sound.music.playing)
-				FlxG.sound.playMusic('assets/music/freakyMenu' + TitleState.soundExt);
+				FlxG.sound.playMusic('assets/music/freakyMenu' + Constants.SOUND_EXT);
 		}
 
 		persistentUpdate = persistentDraw = true;
@@ -113,8 +121,6 @@ class StoryMenuState extends MusicBeatState
 			weekThing.screenCenter(X);
 			weekThing.antialiasing = true;
 		}
-
-		trace("Line 96");
 
 		for (char in 0...3)
 		{
@@ -244,7 +250,7 @@ class StoryMenuState extends MusicBeatState
 
 		if (controls.BACK && !movedBack && !selectedWeek)
 		{
-			FlxG.sound.play('assets/sounds/cancelMenu' + TitleState.soundExt);
+			FlxG.sound.play('assets/sounds/cancelMenu' + Constants.SOUND_EXT);
 			movedBack = true;
 			FlxG.switchState(new MainMenuState());
 		}
@@ -260,7 +266,7 @@ class StoryMenuState extends MusicBeatState
 	{
 		if (stopspamming == false)
 			{
-				FlxG.sound.play('assets/sounds/confirmMenu' + TitleState.soundExt);
+				FlxG.sound.play('assets/sounds/confirmMenu' + Constants.SOUND_EXT);
 
 				grpWeekText.members[curWeek].week.animation.resume();
 				grpWeekCharacters.members[1].animation.play('bfConfirm');
@@ -355,7 +361,7 @@ class StoryMenuState extends MusicBeatState
 			bullShit++;
 		}
 
-		FlxG.sound.play('assets/sounds/scrollMenu' + TitleState.soundExt);
+		FlxG.sound.play('assets/sounds/scrollMenu' + Constants.SOUND_EXT);
 
 		updateText();
 	}

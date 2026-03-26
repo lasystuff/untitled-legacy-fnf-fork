@@ -1,43 +1,32 @@
-package;
+package funkin.game;
 
-import Song.SwagSong;
-import flixel.FlxBasic;
 import flixel.FlxCamera;
 import flixel.FlxG;
-import flixel.FlxGame;
 import flixel.FlxObject;
 import flixel.FlxSprite;
-import flixel.FlxState;
-import flixel.FlxSubState;
-import flixel.addons.display.FlxGridOverlay;
-import flixel.addons.effects.FlxTrail;
-import flixel.addons.effects.FlxTrailArea;
-import flixel.addons.effects.chainable.FlxEffectSprite;
-import flixel.addons.effects.chainable.FlxWaveEffect;
 import flixel.addons.transition.FlxTransitionableState;
-import flixel.graphics.atlas.FlxAtlas;
 import flixel.graphics.frames.FlxAtlasFrames;
-import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.group.FlxGroup;
 import flixel.math.FlxMath;
-import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
 import flixel.sound.FlxSound;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.ui.FlxBar;
-import flixel.util.FlxCollision;
 import flixel.util.FlxColor;
 import flixel.util.FlxSort;
 import flixel.util.FlxStringUtil;
 import flixel.util.FlxTimer;
-import haxe.Json;
 import lime.utils.Assets;
-import openfl.display.BlendMode;
-import openfl.display.StageQuality;
-import openfl.filters.ShaderFilter;
 
-import modding.HScript;
+import funkin.game.objects.*;
+import funkin.game.ui.*;
+import funkin.game.song.*;
+
+import funkin.ui.MusicBeatState;
+import funkin.scripting.HScript;
+import funkin.game.song.Song.SwagSong;
 
 using StringTools;
 
@@ -132,7 +121,6 @@ class PlayState extends MusicBeatState
 		stage = new Stage(curStage);
 		add(stage);
 		scripts.push(stage.script);
-		// stage yml? not yet.
 
 		var gfVersion:String = 'gf';
 
@@ -248,7 +236,7 @@ class PlayState extends MusicBeatState
 
 			{
 				case 0:
-					FlxG.sound.play('assets/sounds/intro3' + TitleState.soundExt, 0.6);
+					FlxG.sound.play('assets/sounds/intro3' + Constants.SOUND_EXT, 0.6);
 				case 1:
 					var ready:FlxSprite = new FlxSprite().loadGraphic('assets/images/' + introAlts[0]);
 					ready.scrollFactor.set();
@@ -266,7 +254,7 @@ class PlayState extends MusicBeatState
 							ready.destroy();
 						}
 					});
-					FlxG.sound.play('assets/sounds/intro2' + TitleState.soundExt, 0.6);
+					FlxG.sound.play('assets/sounds/intro2' + Constants.SOUND_EXT, 0.6);
 				case 2:
 					var set:FlxSprite = new FlxSprite().loadGraphic('assets/images/' + introAlts[1]);
 					set.scrollFactor.set();
@@ -283,7 +271,7 @@ class PlayState extends MusicBeatState
 							set.destroy();
 						}
 					});
-					FlxG.sound.play('assets/sounds/intro1' + TitleState.soundExt, 0.6);
+					FlxG.sound.play('assets/sounds/intro1' + Constants.SOUND_EXT, 0.6);
 				case 3:
 					var go:FlxSprite = new FlxSprite().loadGraphic('assets/images/' + introAlts[2]);
 					go.scrollFactor.set();
@@ -302,7 +290,7 @@ class PlayState extends MusicBeatState
 							go.destroy();
 						}
 					});
-					FlxG.sound.play('assets/sounds/introGo' + TitleState.soundExt, 0.6);
+					FlxG.sound.play('assets/sounds/introGo' + Constants.SOUND_EXT, 0.6);
 				case 4:
 			}
 
@@ -323,7 +311,7 @@ class PlayState extends MusicBeatState
 		lastReportedPlayheadPosition = 0;
 
 		if (!paused)
-			FlxG.sound.playMusic("assets/music/" + SONG.song + "_Inst" + TitleState.soundExt, 1, false);
+			FlxG.sound.playMusic("assets/music/" + SONG.song + "_Inst" + Constants.SOUND_EXT, 1, false);
 		FlxG.sound.music.onComplete = endSong;
 		vocals.play();
 	}
@@ -338,7 +326,7 @@ class PlayState extends MusicBeatState
 		curSong = songData.song;
 
 		if (SONG.needsVoices)
-			vocals = new FlxSound().loadEmbedded("assets/music/" + curSong + "_Voices" + TitleState.soundExt);
+			vocals = new FlxSound().loadEmbedded("assets/music/" + curSong + "_Voices" + Constants.SOUND_EXT);
 		else
 			vocals = new FlxSound();
 
@@ -493,7 +481,7 @@ class PlayState extends MusicBeatState
 		}
 	}
 
-	override function openSubState(SubState:FlxSubState)
+	override function openSubState(SubState:flixel.FlxSubState)
 	{
 		if (paused)
 		{
@@ -727,9 +715,7 @@ class PlayState extends MusicBeatState
 			vocals.stop();
 			FlxG.sound.music.stop();
 
-			openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
-
-			// FlxG.switchState(new GameOverState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+			openSubState(new GameOverSubState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 		}
 
 		if (unspawnNotes[0] != null)
@@ -867,7 +853,7 @@ class PlayState extends MusicBeatState
 
 			if (storyPlaylist.length <= 0)
 			{
-				FlxG.sound.playMusic('assets/music/freakyMenu' + TitleState.soundExt);
+				FlxG.sound.playMusic('assets/music/freakyMenu' + Constants.SOUND_EXT);
 
 				transIn = FlxTransitionableState.defaultTransIn;
 				transOut = FlxTransitionableState.defaultTransOut;
@@ -1260,8 +1246,8 @@ class PlayState extends MusicBeatState
 
 			songScore -= 10;
 
-			FlxG.sound.play('assets/sounds/missnote' + FlxG.random.int(1, 3) + TitleState.soundExt, FlxG.random.float(0.1, 0.2));
-			// FlxG.sound.play('assets/sounds/missnote1' + TitleState.soundExt, 1, false);
+			FlxG.sound.play('assets/sounds/missnote' + FlxG.random.int(1, 3) + Constants.SOUND_EXT, FlxG.random.float(0.1, 0.2));
+			// FlxG.sound.play('assets/sounds/missnote1' + Constants.SOUND_EXT, 1, false);
 			// FlxG.log.add('played imss note');
 
 			playerControllable = false;

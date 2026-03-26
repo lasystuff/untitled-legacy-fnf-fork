@@ -1,4 +1,4 @@
-package;
+package funkin.menu.story;
 
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;

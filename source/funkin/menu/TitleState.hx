@@ -1,9 +1,7 @@
-package;
+package funkin.menu;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.FlxState;
-import flixel.addons.display.FlxGridOverlay;
 import flixel.addons.transition.FlxTransitionSprite.GraphicTransTileDiamond;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.addons.transition.TransitionData;
@@ -14,21 +12,22 @@ import flixel.input.gamepad.FlxGamepad;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
 import flixel.sound.FlxSound;
-import flixel.system.ui.FlxSoundTray;
-import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
-import lime.app.Application;
 import openfl.Assets;
+
+import funkin.ui.MusicBeatState;
+import funkin.ui.Alphabet;
+import funkin.data.PlayerSettings;
+import funkin.data.Highscore;
 
 using StringTools;
 
 class TitleState extends MusicBeatState
 {
 	static var initialized:Bool = false;
-	static public var soundExt:String = ".mp3";
 
 	var blackScreen:FlxSprite;
 	var credGroup:FlxGroup;
@@ -42,12 +41,8 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
-		#if (!web)
-		soundExt = '.ogg';
-		#end
-
 		PlayerSettings.init();
-
+		
 		curWacky = FlxG.random.getObject(getIntroTextShit());
 
 		// DEBUG BULLSHIT
@@ -96,10 +91,10 @@ class TitleState extends MusicBeatState
 			// https://github.com/HaxeFlixel/flixel-addons/pull/348
 
 			// var music:FlxSound = new FlxSound();
-			// music.loadStream('assets/music/freakyMenu' + TitleState.soundExt);
+			// music.loadStream('assets/music/freakyMenu' + Constants.SOUND_EXT);
 			// FlxG.sound.list.add(music);
 			// music.play();
-			FlxG.sound.playMusic('assets/music/freakyMenu' + TitleState.soundExt, 0);
+			FlxG.sound.playMusic('assets/music/freakyMenu' + Constants.SOUND_EXT, 0);
 
 			FlxG.sound.music.fadeIn(4, 0, 0.7);
 		}
@@ -230,7 +225,7 @@ class TitleState extends MusicBeatState
 			titleText.animation.play('press');
 
 			FlxG.camera.flash(FlxColor.WHITE, 1);
-			FlxG.sound.play('assets/sounds/confirmMenu' + TitleState.soundExt, 0.7);
+			FlxG.sound.play('assets/sounds/confirmMenu' + Constants.SOUND_EXT, 0.7);
 
 			transitioning = true;
 			// FlxG.sound.music.stop();
@@ -239,7 +234,7 @@ class TitleState extends MusicBeatState
 			{
 				FlxG.switchState(new MainMenuState());
 			});
-			// FlxG.sound.play('assets/music/titleShoot' + TitleState.soundExt, 0.7);
+			// FlxG.sound.play('assets/music/titleShoot' + Constants.SOUND_EXT, 0.7);
 		}
 
 		if (pressedEnter && !skippedIntro)

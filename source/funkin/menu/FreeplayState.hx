@@ -1,14 +1,18 @@
-package;
+package funkin.menu;
 
 import flash.text.TextField;
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.addons.display.FlxGridOverlay;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import lime.utils.Assets;
+
+import funkin.game.PlayState;
+import funkin.game.song.Song;
+import funkin.ui.MusicBeatState;
+import funkin.ui.Alphabet;
 
 using StringTools;
 
@@ -36,7 +40,7 @@ class FreeplayState extends MusicBeatState
 			if (FlxG.sound.music != null)
 			{
 				if (!FlxG.sound.music.playing)
-					FlxG.sound.playMusic('assets/music/freakyMenu' + TitleState.soundExt);
+					FlxG.sound.playMusic('assets/music/freakyMenu' + Constants.SOUND_EXT);
 			}
 		 */
 
@@ -85,7 +89,7 @@ class FreeplayState extends MusicBeatState
 		changeSelection();
 		changeDiff();
 
-		// FlxG.sound.playMusic('assets/music/title' + TitleState.soundExt, 0);
+		// FlxG.sound.playMusic('assets/music/title' + Constants.SOUND_EXT, 0);
 		// FlxG.sound.music.fadeIn(2, 0, 0.8);
 		selector = new FlxText();
 
@@ -195,7 +199,7 @@ class FreeplayState extends MusicBeatState
 
 	function changeSelection(change:Int = 0)
 	{
-		FlxG.sound.play('assets/sounds/scrollMenu' + TitleState.soundExt, 0.4);
+		FlxG.sound.play('assets/sounds/scrollMenu' + Constants.SOUND_EXT, 0.4);
 
 		curSelected += change;
 
@@ -211,7 +215,7 @@ class FreeplayState extends MusicBeatState
 		// lerpScore = 0;
 		#end
 
-		FlxG.sound.playMusic('assets/music/' + songs[curSelected] + "_Inst" + TitleState.soundExt, 0);
+		FlxG.sound.playMusic('assets/music/' + songs[curSelected] + "_Inst" + Constants.SOUND_EXT, 0);
 
 		var bullShit:Int = 0;
 

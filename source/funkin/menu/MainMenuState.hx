@@ -1,4 +1,4 @@
-package;
+package funkin.menu;
 
 import flixel.FlxG;
 import flixel.FlxObject;
@@ -6,12 +6,15 @@ import flixel.FlxSprite;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.effects.FlxFlicker;
 import flixel.graphics.frames.FlxAtlasFrames;
-import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.group.FlxGroup;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import lime.app.Application;
+
+import funkin.ui.MusicBeatState;
+import funkin.menu.story.StoryMenuState;
 
 using StringTools;
 
@@ -33,7 +36,7 @@ class MainMenuState extends MusicBeatState
 
 		if (!FlxG.sound.music.playing)
 		{
-			FlxG.sound.playMusic('assets/music/freakyMenu' + TitleState.soundExt);
+			FlxG.sound.playMusic('assets/music/freakyMenu' + Constants.SOUND_EXT);
 		}
 
 		persistentUpdate = persistentDraw = true;
@@ -108,13 +111,13 @@ class MainMenuState extends MusicBeatState
 		{
 			if (controls.UP_P)
 			{
-				FlxG.sound.play('assets/sounds/scrollMenu' + TitleState.soundExt);
+				FlxG.sound.play('assets/sounds/scrollMenu' + Constants.SOUND_EXT);
 				changeItem(-1);
 			}
 
 			if (controls.DOWN_P)
 			{
-				FlxG.sound.play('assets/sounds/scrollMenu' + TitleState.soundExt);
+				FlxG.sound.play('assets/sounds/scrollMenu' + Constants.SOUND_EXT);
 				changeItem(1);
 			}
 
@@ -136,7 +139,7 @@ class MainMenuState extends MusicBeatState
 				else
 				{
 					selectedSomethin = true;
-					FlxG.sound.play('assets/sounds/confirmMenu' + TitleState.soundExt);
+					FlxG.sound.play('assets/sounds/confirmMenu' + Constants.SOUND_EXT);
 
 					FlxFlicker.flicker(magenta, 1.1, 0.15, false);
 

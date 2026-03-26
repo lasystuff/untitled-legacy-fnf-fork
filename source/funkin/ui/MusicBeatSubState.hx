@@ -1,10 +1,10 @@
-package;
+package funkin.ui;
 
 import Conductor.BPMChangeEvent;
 import flixel.FlxG;
 import flixel.FlxSubState;
 
-class MusicBeatSubstate extends FlxSubState
+class MusicBeatSubState extends FlxSubState
 {
 	public function new()
 	{

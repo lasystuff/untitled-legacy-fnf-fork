@@ -1,34 +1,23 @@
-package;
+package funkin.game;
 
 import flixel.FlxG;
 import flixel.FlxObject;
-import flixel.FlxSubState;
 import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 
-class GameOverSubstate extends MusicBeatSubstate
+import funkin.game.objects.Character;
+import funkin.ui.MusicBeatSubState;
+
+class GameOverSubState extends MusicBeatSubState
 {
 	var bf:Character;
 	var camFollow:FlxObject;
 
-	var stageSuffix:String = "";
-
 	public function new(x:Float, y:Float)
 	{
 		var daStage = PlayState.curStage;
-		var daBf:String = '';
-		switch (daStage)
-		{
-			case 'school':
-				stageSuffix = '-pixel';
-				daBf = 'bf-pixel-dead';
-			case 'schoolEvil':
-				stageSuffix = '-pixel';
-				daBf = 'bf-pixel-dead';
-			default:
-				daBf = 'bf';
-		}
+		var daBf:String = 'bf';
 
 		super();
 
@@ -40,7 +29,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		camFollow = new FlxObject(bf.getGraphicMidpoint().x, bf.getGraphicMidpoint().y, 1, 1);
 		add(camFollow);
 
-		FlxG.sound.play('assets/sounds/fnf_loss_sfx' + stageSuffix + TitleState.soundExt);
+		FlxG.sound.play('assets/sounds/fnf_loss_sfx' + Constants.SOUND_EXT);
 		Conductor.bpm = 100;
 
 		// FlxG.camera.followLerp = 1;
@@ -77,7 +66,7 @@ class GameOverSubstate extends MusicBeatSubstate
 
 		if (bf.animation.curAnim.name == 'firstDeath' && bf.animation.curAnim.finished)
 		{
-			FlxG.sound.playMusic('assets/music/gameOver' + stageSuffix + TitleState.soundExt);
+			FlxG.sound.playMusic('assets/music/gameOver' + stageSuffix + Constants.SOUND_EXT);
 		}
 
 		if (FlxG.sound.music.playing)
@@ -102,7 +91,7 @@ class GameOverSubstate extends MusicBeatSubstate
 			isEnding = true;
 			bf.playAnim('deathConfirm', true);
 			FlxG.sound.music.stop();
-			FlxG.sound.play('assets/music/gameOverEnd' + stageSuffix + TitleState.soundExt);
+			FlxG.sound.play('assets/music/gameOverEnd' + stageSuffix + Constants.SOUND_EXT);
 			new FlxTimer().start(0.7, function(tmr:FlxTimer)
 			{
 				FlxG.camera.fade(FlxColor.BLACK, 2, false, function()

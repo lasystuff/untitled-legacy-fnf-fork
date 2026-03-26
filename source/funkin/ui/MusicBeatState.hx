@@ -1,11 +1,14 @@
-package;
+package funkin.ui;
 
-import Conductor.BPMChangeEvent;
 import flixel.FlxG;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.addons.ui.FlxUIState;
 import flixel.math.FlxRect;
 import flixel.util.FlxTimer;
+
+import funkin.Conductor.BPMChangeEvent;
+import funkin.data.Controls;
+import funkin.data.PlayerSettings;
 
 class MusicBeatState extends FlxUIState
 {
@@ -23,10 +26,6 @@ class MusicBeatState extends FlxUIState
 	{
 		if (transIn != null)
 			trace('reg ' + transIn.region);
-
-		#if (!web)
-		TitleState.soundExt = '.ogg';
-		#end
 
 		super.create();
 	}

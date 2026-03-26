@@ -1,6 +1,6 @@
-package;
+package funkin;
 
-import Song.SwagSong;
+import funkin.game.song.Song.SwagSong;
 
 /**
  * ...
